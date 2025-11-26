@@ -175,11 +175,14 @@ let decode
       begin match Char.code @@ String.unsafe_get s (i+1) with
         | 0x84 -> fnc n 'U'
         | 0x86 -> fnc n 'E'
-        | 0x87 | 0x9B -> fnc n 'e'
+        | 0x87 -> fnc n 'e'
         | 0x8E -> fnc n 'Y'
         | 0x8F -> fnc n 'y'
         | 0x94 -> fnc n 'o'
-        | 0xA8 | 0xA9 | 0xAE -> fnc n 'i'
+        | 0x9B -> fnc n 'e'
+        | 0xA8 -> fnc n 'i'
+        | 0xA9 -> fnc n 'i'
+        | 0xAE -> fnc n 'i'
         | _ -> unsupported n
       end
 
@@ -223,7 +226,8 @@ let decode
         | 0x9F -> fnc n 'O'
         | 0xA0 -> fnc n 'P'
         | 0xA1 -> fnc n 'R'
-        | 0xA2 | 0xA3 -> fnc n 'S'
+        | 0xA2 -> fnc n 'S'
+        | 0xA3 -> fnc n 'S'
         | 0xA4 -> fnc n 'T'
         | 0xA5 -> fnc n 'U'
         | 0xA6 -> fns n "PH"
@@ -259,15 +263,19 @@ let decode
       begin match Char.code @@ String.unsafe_get s (i+1) with
         | 0x80 -> fnc n 'p'
         | 0x81 -> fnc n 'r'
-        | 0x82 | 0x83 -> fnc n 's'
+        | 0x82 -> fnc n 's'
+        | 0x83 -> fnc n 's'
         | 0x84 -> fnc n 't'
         | 0x85 -> fnc n 'u'
         | 0x86 -> fns n "ph"
         | 0x87 -> fns n "kh"
         | 0x88 -> fns n "ps"
-        | 0x89  | 0x8C | 0x8E -> fnc n 'o'
+        | 0x89 -> fnc n 'o'
         | 0x8A -> fnc n 'i'
-        | 0x8B | 0x8D -> fnc n 'u'
+        | 0x8B -> fnc n 'u'
+        | 0x8C -> fnc n 'o'
+        | 0x8D -> fnc n 'u'
+        | 0x8E -> fnc n 'o'
         | _ -> unsupported n
       end
 
@@ -284,7 +292,8 @@ let decode
         | 0x95 -> fnc n 'E'
         | 0x96 -> fnc n 'J'
         | 0x97 -> fnc n 'Z'
-        | 0x98 | 0x99 -> fnc n 'I'
+        | 0x98 -> fnc n 'I'
+        | 0x99 -> fnc n 'I'
         | 0x9A -> fnc n 'K'
         | 0x9B -> fnc n 'L'
         | 0x9C -> fnc n 'M'
@@ -300,10 +309,10 @@ let decode
         | 0xA6 -> fns n "TS"
         | 0xA7 -> fns n "TCH"
         | 0xA8 -> fns n "CH"
-        | 0xA9 -> fns n "CHT"
+        | 0xA9 -> fns n "SHCH"
         | 0xAB -> fnc n 'Y'
         | 0xAD -> fnc n 'E'
-        | 0xAE -> fns n "YOU"
+        | 0xAE -> fns n "YU"
         | 0xAF -> fns n "YA"
         | 0xB0 -> fnc n 'a'
         | 0xB1 -> fnc n 'b'
@@ -313,7 +322,8 @@ let decode
         | 0xB5 -> fnc n 'e'
         | 0xB6 -> fnc n 'j'
         | 0xB7 -> fnc n 'z'
-        | 0xB8 | 0xB9 -> fnc n 'i'
+        | 0xB8 -> fnc n 'i'
+        | 0xB9 -> fnc n 'i'
         | 0xBA -> fnc n 'k'
         | 0xBB -> fnc n 'l'
         | 0xBC -> fnc n 'm'
@@ -334,7 +344,7 @@ let decode
         | 0x86 -> fns n "ts"
         | 0x87 -> fns n "tch"
         | 0x88 -> fns n "ch"
-        | 0x89 -> fns n "cht"
+        | 0x89 -> fns n "shch"
         | 0x8B -> fnc n 'y'
         | 0x8C -> fnc n '\''
         | 0x8D -> fnc n 'e'
@@ -763,17 +773,100 @@ let decode
 
      | 0xEA ->
        begin match Char.code @@ String.unsafe_get s (i + 1) with
+         | 0x9C ->
+           begin match Char.code @@ String.unsafe_get s (i + 2) with
+             | 0xB0 -> fns n "F"
+             | 0xB1 -> fns n "S"
+             | 0xB2 -> fns n "AA"
+             | 0xB3 -> fns n "aa"
+             | 0xB4 -> fns n "AO"
+             | 0xB5 -> fns n "ao"
+             | 0xB6 -> fns n "AU"
+             | 0xB7 -> fns n "au"
+             | 0xB8 -> fns n "AV"
+             | 0xB9 -> fns n "av"
+             | 0xBA -> fns n "AV"
+             | 0xBB -> fns n "av"
+             | 0xBC -> fns n "AY"
+             | 0xBD -> fns n "at"
+             | _ -> unsupported n
+            end
          | 0x9D ->
            begin match Char.code @@ String.unsafe_get s (i + 2) with
-             | 0x8A | 0x8C -> fnc n 'O'
-             | 0x8B | 0x8D -> fnc n 'o'
-             | 0x8F -> fns n "oo"
+             | 0x80 -> fns n "K"
+             | 0x81 -> fns n "k"
+             | 0x82 -> fns n "K"
+             | 0x83 -> fns n "k"
+             | 0x84 -> fns n "K"
+             | 0x85 -> fns n "k"
+             | 0x86 -> fns n "L"
+             | 0x87 -> fns n "l"
+             | 0x88 -> fns n "L"
+             | 0x89 -> fns n "l"
+             | 0x8A -> fns n "O"
+             | 0x8B -> fns n "o"
+             | 0x8C -> fns n "O"
+             | 0x8D -> fns n "o"
              | 0x8E -> fns n "OO"
-             | 0xB8 -> fns n "um"
+             | 0x8F -> fns n "oo"
+             | 0x90 -> fns n "P"
+             | 0x91 -> fns n "p"
+             | 0x92 -> fns n "P"
+             | 0x93 -> fns n "p"
+             | 0x94 -> fns n "P"
+             | 0x95 -> fns n "p"
+             | 0x96 -> fns n "Q"
+             | 0x97 -> fns n "q"
+             | 0x98 -> fns n "Q"
+             | 0x99 -> fns n "q"
+             | 0x9A -> fns n "R"
+             | 0x9B -> fns n "r"
+             | 0x9C -> unsupported n
+             | 0x9D -> unsupported n
+             | 0x9E -> fns n "V"
+             | 0x9F -> fns n "v"
+             | 0xA0 -> fns n "VY"
+             | 0xA1 -> fns n "vy"
+             | 0xA2 -> fns n "Z"
+             | 0xA3 -> fns n "z"
              | _ -> unsupported n
             end
          | 0x9E ->
            begin match Char.code @@ String.unsafe_get s (i + 2) with
+             | 0x90 -> fnc n 'N'
+             | 0x91 -> fnc n 'n'
+             | 0x92 -> fnc n 'C'
+             | 0x93 -> fnc n 'c'
+             | 0x94 -> fnc n 'c'
+             | 0x95 -> fnc n 'h'
+             | 0x96 -> fnc n 'B'
+             | 0x97 -> fnc n 'b'
+             | 0x98 -> fnc n 'F'
+             | 0x99 -> fnc n 'f'
+             | 0x9A -> fns n "AE"
+             | 0x9B -> fns n "ae"
+             | 0x9C -> fns n "OE"
+             | 0x9D -> fns n "oe"
+             | 0x9E -> fns n "UE"
+             | 0x9F -> fns n "ue"
+             | 0xA0 -> fnc n 'G'
+             | 0xA1 -> fnc n 'g'
+             | 0xA2 -> fnc n 'K'
+             | 0xA3 -> fnc n 'k'
+             | 0xA4 -> fnc n 'N'
+             | 0xA5 -> fnc n 'n'
+             | 0xA6 -> fnc n 'R'
+             | 0xA7 -> fnc n 'r'
+             | 0xA8 -> fnc n 'S'
+             | 0xA9 -> fnc n 's'
+             | 0xAA -> fnc n 'H'
+             | 0xAB -> fnc n 'E'
+             | 0xAC -> fnc n 'G'
+             | 0xAD -> fnc n 'L'
+             | 0xAE -> fnc n 'I'
+             | 0xAF -> fnc n 'Q'
+             | 0xB4 -> fnc n 'B'
+             | 0xB5 -> fnc n 'b'
              | 0xB6 -> fnc n 'O'
              | 0xB7 -> fnc n 'o'
              | _ -> unsupported n
